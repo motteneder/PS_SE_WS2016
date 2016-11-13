@@ -1,6 +1,12 @@
 public class Checker {
 
 	public static final char BLACK_KING = 'k';
+	public static final char EMPTY_FIELD = 'e';
+	public static final char WHITE_KNIGHT = 'N';
+	public static final char WHITE_PAWN = 'P';
+	public static final char WHITE_KING = 'K';
+	public static final char BLACK_PAWN = 'p';
+	public static final char BLACK_KNIGHT = 'n';
 
 	public static char[] firstDiagonal;
 	public static char[] secondDiagonal;
@@ -14,7 +20,7 @@ public class Checker {
 	public static char king;
 
 	private static char [] returnInitialRow() {
-		return new char[]{'e','e','e','e','e','e','e','e'};
+		return new char[]{EMPTY_FIELD, EMPTY_FIELD, EMPTY_FIELD, EMPTY_FIELD, EMPTY_FIELD, EMPTY_FIELD, EMPTY_FIELD, EMPTY_FIELD};
 	}
 	public static boolean isInCheck(int indexOfKing, String chessBoard){
 
@@ -62,7 +68,7 @@ public class Checker {
 				break;
 			}
 		}
-		
+
 		// fourth diagonal (up left)	
 		for(int i=0; i<8; i++){
 			if(indexOfKing - i*9 >= 0){
@@ -74,7 +80,7 @@ public class Checker {
 				break;
 			}
 		}
-		
+
 		// fields where a knight could endanger the king.	
 		if(indexOfKing - 17 >= 0){
 			knight[0] = chessBoard.charAt(indexOfKing - 17);
@@ -83,7 +89,7 @@ public class Checker {
 		else{
 			knight[0] = '.';
 			knight[1] = '.';
-		}	
+		}
 		if(indexOfKing - 10 >= 0){
 			knight[2] = chessBoard.charAt(indexOfKing - 10);
 			knight[3] = chessBoard.charAt(indexOfKing - 6);
@@ -91,7 +97,7 @@ public class Checker {
 		else{
 			knight[2] = '.';
 			knight[3] = '.';
-		}	
+		}
 		if(indexOfKing + 10 < 64){
 			knight[4] = chessBoard.charAt(indexOfKing + 10);
 			knight[5] = chessBoard.charAt(indexOfKing + 6);
@@ -99,7 +105,7 @@ public class Checker {
 		else{
 			knight[4] = '.';
 			knight[5] = '.';
-		}	
+		}
 		if(indexOfKing + 17 < 64){
 			knight[6] = chessBoard.charAt(indexOfKing + 17);
 			knight[7] = chessBoard.charAt(indexOfKing + 15);
@@ -108,7 +114,7 @@ public class Checker {
 			knight[6] = '.';
 			knight[7] = '.';
 		}
-		
+
 		// first horizontal (right)
 		for(int i=0; i<8; i++){
 			if(indexOfKing + i < 64){
@@ -120,7 +126,7 @@ public class Checker {
 			   indexOfKing + i == 55){
 						break;
 					}
-		}		
+		}
 		// second horizontal (left)
 		for(int i=0; i<8; i++){
 			if(indexOfKing - i >= 0){
@@ -133,77 +139,70 @@ public class Checker {
 				break;
 			}
 		}
-		
+
 		// first vertical line (down)
 		for(int i=0; i<8; i++){
 			if(indexOfKing + i*8 < 64){
 				firstVertical[i] = chessBoard.charAt(indexOfKing + i*8);
 			}
 		}
-		
+
 		// second vertical line (up)
 		for(int i=0; i<8; i++){
 			if(indexOfKing - i*8 >= 0){
 				secondVertical[i] = chessBoard.charAt(indexOfKing - i*8);
 			}
 		}
-		
+
 		// Checking if king is in check.
 		king = chessBoard.charAt(indexOfKing);
-		switch (king) {
-		case BLACK_KING:		//black king
-			for(int i=1; i<8 && knight[i] != 'e'; i++){ // Checking if Knight endangers King.
-				if(knight[i] == 'N'){
-					return true;
-				}
-			}
+		return checkIfKindIsEndangered(king);
+	}
 
-			if(firstDiagonal[1] == 'P'){ // Checking if Pawn endangers King
-				return true;
-			}
-			if(secondDiagonal[1] == 'P'){ // Checking if Pawn endangers King
-				return true;
-			}
+	private static boolean checkIfKindIsEndangered(char king) {
+		char enemyKnight = ' ';
+		char enemyPawn = ' ';
+		char firstDiagonalToCheck[] = firstDiagonal;
+		char secondDiagonalToCheck[] = secondDiagonal;
 
-			// Checking if Bishop or Queen (diagonally) endangers king.
-
-			if(bishopOrQueenDanger(firstDiagonal) || bishopOrQueenDanger(secondDiagonal) ||
-			   bishopOrQueenDanger(thirdDiagonal) || bishopOrQueenDanger(fourthDiagonal)){
-				return true;
-			}
-
-			// Checking if Rook or Queen (vertically or horizontally) endangers king.
-			if(rookOrQueenDanger(firstHorizontal) || rookOrQueenDanger(secondHorizontal) ||
-			   rookOrQueenDanger(firstVertical) || rookOrQueenDanger(secondVertical)){
-						return true;
-			}
-		case 'K': //white king;
-			for(int i=1; i<8 && knight[i] != 'e'; i++){ // Checking if Knight endangers King.
-				if(knight[i] == 'n'){
-					return true;
-				}
-			}
-			
-			if(thirdDiagonal[1] == 'p'){ // Checking if Pawn endangers King
-				return true;
-			}
-			if(fourthDiagonal[1] == 'p'){ // Checking if Pawn endangers King
-				return true;
-			}
-			
-			// Checking if bishop or queen (diagonally) endangers king.
-			
-			if(bishopOrQueenDanger(firstDiagonal) || bishopOrQueenDanger(secondDiagonal) ||
-			   bishopOrQueenDanger(thirdDiagonal) || bishopOrQueenDanger(fourthDiagonal)){
-				return true;
-			}
-	
-			// Checking if rook or queen (vertically or horizontally) endangers king.
-			if(rookOrQueenDanger(firstHorizontal) || rookOrQueenDanger(secondHorizontal) ||
-			   rookOrQueenDanger(firstVertical) || rookOrQueenDanger(secondVertical)){
-				return true;
-			}
+		switch(king) {
+			case BLACK_KING:
+				enemyKnight = WHITE_KNIGHT;
+				enemyPawn = WHITE_PAWN;
+				break;
+			case WHITE_KING:
+				enemyKnight = BLACK_KNIGHT;
+				enemyPawn = BLACK_PAWN;
+				firstDiagonalToCheck = thirdDiagonal;
+				secondDiagonalToCheck = fourthDiagonal;
+				break;
 		}
+
+		for(int i = 1; i<8 && knight[i] != EMPTY_FIELD; i++){ // Checking if Knight endangers King.
+            if(knight[i] == enemyKnight){
+				return true;
+            }
+        }
+
+		if(firstDiagonalToCheck[1] == enemyPawn){ // Checking if Pawn endangers King
+			return true;
+        }
+		if(secondDiagonalToCheck[1] == enemyPawn){ // Checking if Pawn endangers King
+			return true;
+        }
+
+		// Checking if Bishop or Queen (diagonally) endangers king.
+
+		if(bishopOrQueenDanger(firstDiagonal) || bishopOrQueenDanger(secondDiagonal) ||
+           bishopOrQueenDanger(thirdDiagonal) || bishopOrQueenDanger(fourthDiagonal)){
+			return true;
+        }
+
+		// Checking if Rook or Queen (vertically or horizontally) endangers king.
+		if(rookOrQueenDanger(firstHorizontal) || rookOrQueenDanger(secondHorizontal) ||
+           rookOrQueenDanger(firstVertical) || rookOrQueenDanger(secondVertical)){
+			return true;
+        }
 		return false;
 	}
 
