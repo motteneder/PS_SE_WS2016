@@ -1,3 +1,6 @@
+package assignment5;
+import assignment5.Checker;
+
 
 public class KingInCheck implements Check{
 	
@@ -32,13 +35,13 @@ public class KingInCheck implements Check{
 										+ "PP..PPPP" 
 										+ "RNBQKB.R";
 	
-	public int whoIsInCheck(String chessConfiguration) throws InvalidInputException {
+	public int whoIsInCheck(String chessConfiguration) throws IllegalArgumentException {
 
-		if(chessConfiguration.contains('k') && 
+		if(chessConfiguration.contains("k") && 
 		   chessConfiguration.indexOf('k', chessConfiguration.indexOf('k')) == -1 &&	// if chess configuration contains 'k' exactly one time
-		   chessConfiguration.contains('K') && 
+		   chessConfiguration.contains("K") && 
 		   chessConfiguration.indexOf('k', chessConfiguration.indexOf('k')) == -1  && // if chess configuration contains 'K' exactly one time
-		   chessConfiguration.length() = 64) {
+		   chessConfiguration.length() == 64) {
 			
 			int indexOfBlackKing = chessConfiguration.indexOf('k');
 			int indexOfWhiteKing = chessConfiguration.indexOf('K');
@@ -51,6 +54,6 @@ public class KingInCheck implements Check{
 			}
 			else return NONE_IN_CHECK;
 		}
-		else throw new InvalidInputException;
+		else throw new IllegalArgumentException();
 	}
 }
