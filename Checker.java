@@ -1,5 +1,7 @@
 public class Checker {
-	
+
+	public static final char BLACK_KING = 'k';
+
 	public static boolean isInCheck(int indexOfKing, String chessBoard){
 		char[] firstDiagonal = 	  {'e','e','e','e','e','e','e','e'};
 		char[] secondDiagonal =   {'e','e','e','e','e','e','e','e'};
@@ -135,7 +137,7 @@ public class Checker {
 		// Checking if king is in check.
 		king = chessBoard.charAt(indexOfKing);
 		switch (king) {
-		case 'k':		//black king
+		case BLACK_KING:		//black king
 			for(int i=1; i<8 && knight[i] != 'e'; i++){ // Checking if Knight endangers King.
 				if(knight[i] == 'N'){
 					return true;
@@ -193,7 +195,7 @@ public class Checker {
 	
 	// Checking if a diagonal contains an enemy bishop or queen which endangers the king.
 	public static boolean bishopOrQueenDanger(char[] diagonal){
-		if(diagonal[0] == 'k'){	// black King
+		if(diagonal[0] == BLACK_KING){	// black King
 			for(int i=1; i<8; i++){
 				if(diagonal[i] == 'B' || diagonal[i] == 'Q'){
 					return true;
@@ -219,7 +221,7 @@ public class Checker {
 	
 	// Checking if a horizontal or vertical straight contains an enemy rook or queen which endangers the king.
 	public static boolean rookOrQueenDanger(char[] line){
-		if(line[0] == 'k'){ // black King
+		if(line[0] == BLACK_KING){ // black King
 			for(int i=1; i<8; i++){
 				if(line[i] == 'R' || line[i] == 'Q'){
 				return true;
