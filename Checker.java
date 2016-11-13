@@ -2,18 +2,32 @@ public class Checker {
 
 	public static final char BLACK_KING = 'k';
 
+	public static char[] firstDiagonal;
+	public static char[] secondDiagonal;
+	public static char[] thirdDiagonal;
+	public static char[] fourthDiagonal;
+	public static char[] knight;
+	public static char[] firstVertical;
+	public static char[] secondVertical;
+	public static char[] firstHorizontal;
+	public static char[] secondHorizontal;
+	public static char king;
+
+	private static char [] returnInitialRow() {
+		return new char[]{'e','e','e','e','e','e','e','e'};
+	}
 	public static boolean isInCheck(int indexOfKing, String chessBoard){
-		char[] firstDiagonal = 	  {'e','e','e','e','e','e','e','e'};
-		char[] secondDiagonal =   {'e','e','e','e','e','e','e','e'};
-		char[] thirdDiagonal = 	  {'e','e','e','e','e','e','e','e'};
-		char[] fourthDiagonal =   {'e','e','e','e','e','e','e','e'};
-		char[] knight = 		  {'e','e','e','e','e','e','e','e'};
-		char[] firstVertical = 	  {'e','e','e','e','e','e','e','e'};
-		char[] secondVertical =   {'e','e','e','e','e','e','e','e'};
-		char[] firstHorizontal =  {'e','e','e','e','e','e','e','e'};
-		char[] secondHorizontal = {'e','e','e','e','e','e','e','e'};
-		char king;
-		
+
+		firstDiagonal = 	  returnInitialRow();
+		secondDiagonal =  	returnInitialRow();
+		thirdDiagonal = 	  returnInitialRow();
+		fourthDiagonal =   returnInitialRow();
+		knight = 		  returnInitialRow();
+		firstVertical = 	  returnInitialRow();
+		secondVertical =   returnInitialRow();
+		firstHorizontal =  returnInitialRow();
+		secondHorizontal = returnInitialRow();
+		;
 		// first diagonal (down right)
 		for(int i=0; i<8; i++){
 			if(indexOfKing + i*9 < 64){
@@ -143,16 +157,16 @@ public class Checker {
 					return true;
 				}
 			}
-			
+
 			if(firstDiagonal[1] == 'P'){ // Checking if Pawn endangers King
 				return true;
 			}
 			if(secondDiagonal[1] == 'P'){ // Checking if Pawn endangers King
 				return true;
 			}
-			
+
 			// Checking if Bishop or Queen (diagonally) endangers king.
-			
+
 			if(bishopOrQueenDanger(firstDiagonal) || bishopOrQueenDanger(secondDiagonal) ||
 			   bishopOrQueenDanger(thirdDiagonal) || bishopOrQueenDanger(fourthDiagonal)){
 				return true;
@@ -192,7 +206,7 @@ public class Checker {
 		}
 		return false;
 	}
-	
+
 	// Checking if a diagonal contains an enemy bishop or queen which endangers the king.
 	public static boolean bishopOrQueenDanger(char[] diagonal){
 		if(diagonal[0] == BLACK_KING){	// black King
@@ -218,7 +232,7 @@ public class Checker {
 			return false;
 		}
 	}
-	
+
 	// Checking if a horizontal or vertical straight contains an enemy rook or queen which endangers the king.
 	public static boolean rookOrQueenDanger(char[] line){
 		if(line[0] == BLACK_KING){ // black King

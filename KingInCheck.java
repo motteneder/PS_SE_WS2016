@@ -1,6 +1,3 @@
-package assignment5;
-import assignment5.Checker;
-
 
 public class KingInCheck implements Check{
 	
@@ -38,9 +35,9 @@ public class KingInCheck implements Check{
 	public int whoIsInCheck(String chessConfiguration) throws IllegalArgumentException {
 
 		if(chessConfiguration.contains("k") && 
-		   chessConfiguration.indexOf('k', chessConfiguration.indexOf('k')) == -1 &&	// if chess configuration contains 'k' exactly one time
+		   chessConfiguration.indexOf('k', chessConfiguration.indexOf('k') + 1) == -1 &&	// if chess configuration contains 'k' exactly one time
 		   chessConfiguration.contains("K") && 
-		   chessConfiguration.indexOf('k', chessConfiguration.indexOf('k')) == -1  && // if chess configuration contains 'K' exactly one time
+		   chessConfiguration.indexOf('k', chessConfiguration.indexOf('k') +1 ) == -1  && // if chess configuration contains 'K' exactly one time
 		   chessConfiguration.length() == 64) {
 			
 			int indexOfBlackKing = chessConfiguration.indexOf('k');

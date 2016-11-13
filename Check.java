@@ -1,4 +1,4 @@
-/*** Interface for assignment 05: Check */
+ /*** Interface for assignment 05: Check */
 
 public interface Check {
 	
